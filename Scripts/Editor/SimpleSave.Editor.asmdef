@@ -1,0 +1,18 @@
+{
+    "name": "SimpleSave.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9685859f3110cd54295f7e74a18f20bb"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

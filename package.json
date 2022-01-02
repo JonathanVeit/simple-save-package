@@ -1,0 +1,21 @@
+{
+    "name": "com.jonathanveit.simplesave",
+    "version": "0.1.0",
+    "displayName": "Simple Save",
+    "description": "An easy to use framework to implement saving and loading features in unity projects.",
+    "unity": "2019.1",
+    "unityRelease": "0b5",
+    "documentationUrl": "https://jonathanveit.github.io/simple-save-documentation/html/index.html",
+    "dependencies": {
+    },
+    "keywords": [
+        "Save",
+        "Load",
+        "Serialization"
+    ],
+    "author": {
+        "name": "Jonathan Veit",
+        "email": "Official.JonathanVeit@gmail.com",
+        "url": "https://jonathanveit.wordpress.com/"
+    }
+}
