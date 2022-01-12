@@ -159,6 +159,7 @@ namespace SimpleSave
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PrefixLabel("Documentation");
+#if UNITY_2021_1_OR_NEWER
                 if (EditorGUILayout.LinkButton("Click here"))
                 {
                     if (!_packageInfo.HasValue)
@@ -168,6 +169,7 @@ namespace SimpleSave
 
                     Application.OpenURL(_packageInfo.Value.documentationUrl);
                 }
+#endif
                 EditorGUILayout.EndHorizontal();
             });
         }

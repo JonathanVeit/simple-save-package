@@ -1,6 +1,6 @@
 {
     "name": "com.jonathanveit.simplesave",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "displayName": "Simple Save",
     "description": "An easy to use framework to implement saving and loading features in unity projects.",
     "unity": "2019.1",

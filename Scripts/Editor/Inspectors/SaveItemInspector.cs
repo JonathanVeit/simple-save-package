@@ -56,8 +56,9 @@ namespace SimpleSave.Components
         {
             _componentList = new ReorderableList(Target.GetComponents(), typeof(ComponentInfo), true,
                 true, true, true);
+#if UNITY_2021_1_OR_NEWER
             _componentList.multiSelect = true;
-
+#endif
             _componentList.drawHeaderCallback = DrawComponentListHeader;
             _componentList.drawElementCallback = DrawComponentListElement;
             _componentList.onAddCallback = AddElementToComponentList;
@@ -135,10 +136,11 @@ namespace SimpleSave.Components
 
                 var curSaveItem = asGameObject.GetComponent<SaveItem>();
 
+#if UNITY_2021_1_OR_NEWER
                 for (int j = list.selectedIndices.Count - 1; j >= 0; j--)
                 {
                     var index = list.selectedIndices[j];
-                
+                    
                     if (index > curSaveItem.GetComponents().Count - 1)
                     {
                         continue;
@@ -146,10 +148,13 @@ namespace SimpleSave.Components
 
                     curSaveItem.GetComponents().RemoveAt(index);
                 }
+#else
+                curSaveItem.GetComponents().RemoveAt(list.index);
+#endif
             }
         }
 
-        #endregion
+#endregion
 
         public override void OnInspectorGUI()
         {
@@ -228,7 +233,7 @@ namespace SimpleSave.Components
             DrawComponentList(runtime);
         }
 
-        #region Id and State
+#region Id and State
 
         private void DrawIdAndState()
         {
@@ -316,7 +321,7 @@ namespace SimpleSave.Components
             EditorSceneManager.MarkSceneDirty(Target.gameObject.scene);
         }
 
-        #endregion
+#endregion
 
         private void DrawHeader(string name)
         {
@@ -324,7 +329,7 @@ namespace SimpleSave.Components
             EditorGUILayout.LabelField(name, (GUIStyle)"BoldLabel");
         }
 
-        #region Tags
+#region Tags
 
         private void DrawTags(bool disabled)
         {
@@ -598,7 +603,7 @@ namespace SimpleSave.Components
             return true;
         }
 
-        #endregion
+#endregion
 
         private void DrawSaveProperty(bool disabled)
         {
@@ -644,7 +649,7 @@ namespace SimpleSave.Components
             EditorGUILayout.LabelField("Runtime editing is not supported.", style);
         }
 
-        #region Helper
+#region Helper
 
         private SaveItemId CalculateId()
         {
@@ -688,6 +693,6 @@ namespace SimpleSave.Components
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
-        #endregion
+#endregion
     }
 }
