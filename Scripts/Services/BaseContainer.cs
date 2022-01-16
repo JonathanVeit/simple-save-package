@@ -46,7 +46,7 @@ namespace SimpleSave.Services
             OnInstanceCreated?.Invoke(_instance);
             return _instance;
 #else
-            throw new System.Exception($"Unable to get or create {typeof(TContainer).Name} at path \"{ContainerAssetPath}\".");
+            throw new System.Exception($"Unable to get or create {typeof(TContainer).Name} at path \"{ContainerResourcePath}\".");
 #endif
         }
 

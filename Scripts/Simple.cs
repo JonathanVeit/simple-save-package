@@ -126,10 +126,7 @@ namespace SimpleSave
         public static SaveGameInfo Save(string saveGameName, SaveGameSettings settings,
             Dictionary<string, string> customData)
         {
-            if (!Application.isPlaying)
-            {
-                throw new InvalidOperationException("Save games can only created at runtime.");
-            }
+            ValidateRuntime();
 
             return SaveGameCreator.CreateSaveGame(saveGameName, settings, customData);
         }
@@ -157,10 +154,7 @@ namespace SimpleSave
         /// <param name="settings">Settings to use.</param>
         public static void Load(SaveGameInfo saveGame, SaveGameSettings settings)
         {
-            if (!Application.isPlaying)
-            {
-                throw new InvalidOperationException("Save games can only loaded at runtime.");
-            }
+            ValidateRuntime();
 
             SaveGameLoader.Load(saveGame, settings);
         }
@@ -188,10 +182,7 @@ namespace SimpleSave
         /// <returns>Information about the save games.</returns>
         public static SaveGameInfo[] GetAllSaveGames(SaveGameSettings settings)
         {
-            if (!Application.isPlaying)
-            {
-                throw new InvalidOperationException("You can only get available save games at runtime.");
-            }
+            ValidateRuntime();
 
             if (settings.UsePlayerPrefs)
             {
@@ -221,10 +212,7 @@ namespace SimpleSave
         /// <param name="settings">Settings to use.</param>
         public static void Delete(SaveGameInfo saveGame, SaveGameSettings settings)
         {
-            if (!Application.isPlaying)
-            {
-                throw new InvalidOperationException("You can only delete save games at runtime.");
-            }
+            ValidateRuntime();
 
             if (settings.UsePlayerPrefs)
             {
@@ -237,5 +225,13 @@ namespace SimpleSave
         }
 
         #endregion
+
+        private static void ValidateRuntime()
+        {
+            if (!Application.isPlaying)
+            {
+                throw new InvalidOperationException("You can only use Simple Save at runtime.");
+            }
+        }
     }
 }

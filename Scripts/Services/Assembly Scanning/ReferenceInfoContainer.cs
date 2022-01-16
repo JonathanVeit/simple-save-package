@@ -40,7 +40,7 @@ namespace SimpleSave.Services
                         MemberCategory = referenceInfo.MemberCategory,
                         DeclaringType = referenceInfo.DeclaringType.AssemblyQualifiedName,
                         MemberName = referenceInfo.MemberName,
-                        FieldType = referenceInfo.MemberType.AssemblyQualifiedName
+                        MemberType = referenceInfo.MemberType.AssemblyQualifiedName
                     });
                     return;
                 }
@@ -57,7 +57,7 @@ namespace SimpleSave.Services
                         MemberCategory = referenceInfo.MemberCategory,
                         DeclaringType = referenceInfo.DeclaringType.AssemblyQualifiedName,
                         MemberName = referenceInfo.MemberName,
-                        FieldType = referenceInfo.MemberType.AssemblyQualifiedName
+                        MemberType = referenceInfo.MemberType.AssemblyQualifiedName
                     }
                 }
             });
@@ -144,7 +144,7 @@ namespace SimpleSave.Services
                         Id = serializableMember.Id,
                         MemberCategory = serializableMember.MemberCategory,
                         MemberName = serializableMember.MemberName,
-                        MemberType = Type.GetType(serializableMember.FieldType),
+                        MemberType = Type.GetType(serializableMember.MemberType),
                         DeclaringType = Type.GetType(serializableMember.DeclaringType),
                     });
                 }
@@ -173,10 +173,10 @@ namespace SimpleSave.Services
         private struct SerializableReferenceMember
         {
             public ReferenceId Id;
-            public MemberCategory MemberCategory;
             public string DeclaringType;
+            public MemberCategory MemberCategory;
             public string MemberName;
-            public string FieldType;
+            public string MemberType;
         }
     }
 }

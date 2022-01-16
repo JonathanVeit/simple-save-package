@@ -1,3 +1,6 @@
+[0.1.2] - 2022-01-015
+-  small bugfixes
+
 [0.1.1] - 2022-01-012
 -  added support for Unity version 2020.3.3 and below. 
 

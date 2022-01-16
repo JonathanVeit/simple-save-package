@@ -275,9 +275,10 @@ namespace SimpleSave.Services
         private void SaveTagsToContainer()
         {
             TagContainer.OverrideTags(_tagCacheById.Values);
-
+#if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(TagContainer);
             UnityEditor.AssetDatabase.SaveAssets();
+#endif
         }
 
         #endregion
