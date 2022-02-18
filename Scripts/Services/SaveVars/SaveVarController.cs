@@ -170,10 +170,10 @@ namespace SimpleSave.Services
                     switch (saveVarInfo.MemberCategory)
                     {
                         case MemberCategory.Field:
-                            LoadField(serializableSaveVars[i], saveVarInfo, saveGameSettings.SaveVarSerializer, saveGameSettings.ReferenceResolver);
+                            LoadField(serializableSaveVars[i].Value, saveVarInfo, saveGameSettings.SaveVarSerializer, saveGameSettings.ReferenceResolver);
                             break;
                         case MemberCategory.Property:
-                            LoadProperty(serializableSaveVars[i], saveVarInfo, saveGameSettings.SaveVarSerializer, saveGameSettings.ReferenceResolver);
+                            LoadProperty(serializableSaveVars[i].Value, saveVarInfo, saveGameSettings.SaveVarSerializer, saveGameSettings.ReferenceResolver);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -186,7 +186,7 @@ namespace SimpleSave.Services
             }
         }
 
-        private static void LoadField(SerializableSaveVar serializableSaveVar, SaveVarInfo saveVarInfo,
+        private static void LoadField(string value, SaveVarInfo saveVarInfo,
             ISaveVarSerializer saveVarSerializer, IReferenceResolver referenceResolver)
         {
             var field = saveVarInfo.DeclaringType.GetField(saveVarInfo.MemberName, AssemblyScanner.ScanningFlags);
@@ -197,17 +197,17 @@ namespace SimpleSave.Services
                 return;
             }
 
-            if (TryResolveAsReference(saveVarInfo, serializableSaveVar.Value, saveVarSerializer, referenceResolver,
+            if (TryResolveAsReference(saveVarInfo, value, saveVarSerializer, referenceResolver,
                 out var referencedObject))
             {
                 field.SetValue(null, referencedObject);
                 return;
             }
 
-            field.SetValue(null, saveVarSerializer.Deserialize(serializableSaveVar.Value, saveVarInfo.MemberType));
+            field.SetValue(null, saveVarSerializer.Deserialize(value, saveVarInfo.MemberType));
         }
 
-        private static void LoadProperty(SerializableSaveVar serializableSaveVar, SaveVarInfo saveVarInfo,
+        private static void LoadProperty(string value, SaveVarInfo saveVarInfo,
             ISaveVarSerializer saveVarSerializer, IReferenceResolver referenceResolver)
         {
             var property = saveVarInfo.DeclaringType.GetProperty(saveVarInfo.MemberName, AssemblyScanner.ScanningFlags);
@@ -219,14 +219,14 @@ namespace SimpleSave.Services
                 return;
             }
 
-            if (TryResolveAsReference(saveVarInfo, serializableSaveVar.Value, saveVarSerializer, referenceResolver,
+            if (TryResolveAsReference(saveVarInfo, value, saveVarSerializer, referenceResolver,
                 out var referencedObject))
             {
                 property.SetValue(null, referencedObject);
                 return;
             }
 
-            property.SetValue(null, saveVarSerializer.Deserialize(serializableSaveVar.Value, saveVarInfo.MemberType));
+            property.SetValue(null, saveVarSerializer.Deserialize(value, saveVarInfo.MemberType));
         }
 
         private static bool TryResolveAsReference(SaveVarInfo saveVarInfo, string serializedReference, 

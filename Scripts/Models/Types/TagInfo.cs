@@ -26,6 +26,6 @@ namespace SimpleSave.Models
         /// <summary>
         /// Bitwise shift value of the tag.
         /// </summary>
-        public uint Value;
+        public uint Flag;
     }
 }

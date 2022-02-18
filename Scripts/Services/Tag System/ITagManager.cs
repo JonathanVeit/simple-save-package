@@ -80,9 +80,9 @@ namespace SimpleSave.Services
         /// <summary>
         /// Determines whether any tag associated with the given ids is included in the given collection of tag names.
         /// </summary>
-        /// <param name="tagIds">Id to check.</param>
+        /// <param name="itemTags">Id to check.</param>
         /// <param name="tagCollection">Collection of tags to check against.</param>
-        bool DoAnyTagsMatch(TagId[] tagIds, TagCollection tagCollection);
+        bool DoAnyTagsMatch(TagId[] itemTags, TagCollection tagCollection);
 
         /// <summary>
         /// Determines whether any given tag name is included in the given collection of tag names.

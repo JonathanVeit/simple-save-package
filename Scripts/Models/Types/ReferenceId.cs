@@ -14,6 +14,11 @@ namespace SimpleSave.Models
 
         public ReferenceId(int value)
         {
+            if (value == 0)
+            {
+                throw new ArgumentException("Invalid identifier");
+            }
+
             this._value = value;
         }
 
@@ -57,5 +62,6 @@ namespace SimpleSave.Models
             return _value.ToString();
         }
 
+        public static readonly ReferenceId Invalid = new ReferenceId();
     }
 }

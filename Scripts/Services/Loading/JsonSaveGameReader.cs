@@ -42,12 +42,13 @@ namespace SimpleSave.Services
         /// <inheritdoc/>
         public string ReadFromPlayerPrefs(string fileName)
         {
-            if (!PlayerPrefs.HasKey(fileName))
+            string saveGameName = CreatePlayerPrefsName(fileName);
+
+            if (!PlayerPrefs.HasKey(saveGameName))
             {
                 throw new FileNotFoundException($"Save game \"{fileName}\" could not be found in PlayerPrefs.");
             }
-
-            string saveGameName = CreatePlayerPrefsName(fileName);
+          
             return PlayerPrefs.GetString(saveGameName);
         }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using SimpleSave.Models;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace SimpleSave.Services
 
         private readonly Dictionary<TagId, TagInfo> _tagCacheById;
         private readonly Dictionary<string, TagInfo> _tagCacheByName;
-        private readonly HashSet<uint> _tagValues;
+        private readonly HashSet<uint> _flagCache;
 
         public int MaxTagCount => 32;
 
@@ -19,7 +20,7 @@ namespace SimpleSave.Services
         {
             _tagCacheById = new Dictionary<TagId, TagInfo>();
             _tagCacheByName = new Dictionary<string, TagInfo>();
-            _tagValues = new HashSet<uint>();
+            _flagCache = new HashSet<uint>();
 
             LoadCache();
         }
@@ -107,7 +108,6 @@ namespace SimpleSave.Services
         {
             if (TagExists(tagName))
             {
-                Logger.Log(LogType.Log, $"Trying to ");
                 createdTag = default;
                 return false;
             }
@@ -116,13 +116,13 @@ namespace SimpleSave.Services
             {
                 Id = IdProvider.GetNewTagId(),
                 Name = tagName,
-                Value = GetFreeTagValue(),
+                Flag = GetFreeFlag(),
                 Description = description,
             };
 
             _tagCacheById.Add(tagInfo.Id, tagInfo);
             _tagCacheByName.Add(tagInfo.Name, tagInfo);
-            _tagValues.Add(tagInfo.Value);
+            _flagCache.Add(tagInfo.Flag);
 
             SaveTagsToContainer();
             createdTag = tagInfo;
@@ -136,7 +136,7 @@ namespace SimpleSave.Services
 
             _tagCacheById.Remove(tagId);
             _tagCacheByName.Remove(tagInfo.Name);
-            _tagValues.Remove(tagInfo.Value);
+            _flagCache.Remove(tagInfo.Flag);
             
             SaveTagsToContainer();
         }
@@ -165,10 +165,10 @@ namespace SimpleSave.Services
                 return true;
             }
 
-            var tagMask = ConvertToBitMask(tagIds);
-            var collectionMask = ConvertToBitMask(tagCollection);
+            var bitField = ConvertToBitField(tagCollection.Tags);
+            var bitMask = ConvertToBitField(tagIds);
 
-            return (tagMask & collectionMask) != 0;
+            return (bitField & bitMask) != 0;
         }
 
         /// <inheritdoc />
@@ -195,15 +195,15 @@ namespace SimpleSave.Services
                 return true;
             }
 
-            var tagMask = ConvertToBitMask(tagNames);
-            var collectionMask = ConvertToBitMask(tagCollection);
+            var bitField = ConvertToBitField(tagCollection.Tags);
+            var bitMask = ConvertToBitField(tagNames);
 
-            return (tagMask & collectionMask) != 0;
+            return (bitField & bitMask) != 0;
         }
 
-        private uint ConvertToBitMask(IEnumerable<TagId> tagIds)
+        private uint ConvertToBitField(IEnumerable<TagId> tagIds)
         {
-            uint bitMask = 0;
+            uint bitField = 0;
             foreach (string tagId in tagIds)
             {
                 if (!_tagCacheById.ContainsKey(tagId))
@@ -211,21 +211,17 @@ namespace SimpleSave.Services
                     continue;
                 }
 
-                var tagValue = _tagCacheById[tagId].Value;
+                var tagValue = _tagCacheById[tagId].Flag;
                 
-                bitMask |= tagValue;
+                bitField |= tagValue;
             }
 
-            return bitMask; 
+            return bitField; 
         }
 
-        private uint ConvertToBitMask(TagCollection tagCollection)
+        private uint ConvertToBitField(IEnumerable<string> tagNames)
         {
-            return ConvertToBitMask(tagCollection.Tags);
-        }
-        private uint ConvertToBitMask(IEnumerable<string> tagNames)
-        {
-            uint bitMask = 0;
+            uint bitField = 0;
             foreach (string tagName in tagNames)
             {
                 if (!_tagCacheByName.ContainsKey(tagName))
@@ -233,12 +229,12 @@ namespace SimpleSave.Services
                     continue;
                 }
 
-                var tagValue = _tagCacheByName[tagName].Value;
+                var tagFlag = _tagCacheByName[tagName].Flag;
 
-                bitMask |= tagValue;
+                bitField |= tagFlag;
             }
 
-            return bitMask;
+            return bitField;
         }
 
         #region Helper
@@ -252,21 +248,21 @@ namespace SimpleSave.Services
 
                 _tagCacheById.Add(tagInfo.Id, tagInfo);
                 _tagCacheByName.Add(tagInfo.Name, tagInfo);
-                _tagValues.Add(tagInfo.Value);
+                _flagCache.Add(tagInfo.Flag);
             }
         }
 
-        private uint GetFreeTagValue()
+        private uint GetFreeFlag()
         {
-            for (int i = 1; i < int.MaxValue; i++)
+            for (int i = 0; i < int.MaxValue; i++)
             {
-                var value = (uint)1 << i;
-                if (_tagValues.Contains(value))
+                var flag = (uint)1 << i;
+                if (_flagCache.Contains(flag))
                 {
                     continue;
                 }
 
-                return value;
+                return flag;
             }
 
             return 0;

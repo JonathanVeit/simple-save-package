@@ -1,21 +1,33 @@
 {
-    "name": "com.jonathanveit.simplesave",
-    "version": "0.1.2",
-    "displayName": "Simple Save",
-    "description": "An easy to use framework to implement saving and loading features in unity projects.",
-    "unity": "2019.1",
-    "unityRelease": "0b5",
-    "documentationUrl": "https://jonathanveit.github.io/simple-save-documentation/html/index.html",
-    "dependencies": {
+  "name": "com.jonathanveit.simplesave",
+  "version": "0.1.3",
+  "displayName": "Simple Save",
+  "description": "An easy to use framework to implement saving and loading features in unity projects.",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "https://jonathanveit.github.io/simple-save-documentation/html/index.html",
+  "dependencies": {
+  },
+  "keywords": [
+    "Save",
+    "Load",
+    "Serialization"
+  ],
+  "samples": [
+    {
+      "displayName": "Example 1",
+      "description": "An example implementation with a first person controller and physical objects.",
+      "path": "Samples~/Example 1"
     },
-    "keywords": [
-        "Save",
-        "Load",
-        "Serialization"
-    ],
-    "author": {
-        "name": "Jonathan Veit",
-        "email": "Official.JonathanVeit@gmail.com",
-        "url": "https://jonathanveit.wordpress.com/"
+    {
+      "displayName": "Example 2",
+      "description": "An example implementation for a single player pong game.",
+      "path": "Samples~/Example 2"
     }
+  ],
+  "author": {
+    "name": "Jonathan Veit",
+    "email": "Official.JonathanVeit@gmail.com",
+    "url": "https://jonathanveit.wordpress.com/"
+  }
 }

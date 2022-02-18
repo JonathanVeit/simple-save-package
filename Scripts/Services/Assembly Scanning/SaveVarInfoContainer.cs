@@ -109,11 +109,11 @@ namespace SimpleSave.Services
         private struct SerializableSaveVarInfo
         {
             public SaveVarId Id;
+            public string DeclaringType;
             public MemberCategory MemberCategory;
             public string MemberName;
-            public string DeclaringType;
             public string MemberType;
-            public string[] Tags;
+            [HideInInspector] public string[] Tags;
         }
     }
 }

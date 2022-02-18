@@ -1,3 +1,7 @@
+[0.1.3] - 2022-02-018
+-  small bugfixes
+-  added samples
+
 [0.1.2] - 2022-01-015
 -  small bugfixes
 
