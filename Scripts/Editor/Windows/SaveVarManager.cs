@@ -75,7 +75,7 @@ namespace SimpleSave
                     fontStyle = FontStyle.Italic,
                     normal =
                     {
-                        textColor = Color.white
+                        textColor = Color.yellow
                     },
                     contentOffset = new Vector2(3, 0)
                 };

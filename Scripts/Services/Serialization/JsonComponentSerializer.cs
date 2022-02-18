@@ -339,7 +339,8 @@ namespace SimpleSave.Services
             private static readonly Type ObjectType = typeof(Object);
             private static readonly Type MonoBehaviourType = typeof(MonoBehaviour);
             private static readonly Type GenericListType = typeof(List<>);
-            
+            private static readonly Type LayerMaskType = typeof(LayerMask);
+
             protected override List<MemberInfo> GetSerializableMembers(Type objectType)
             {
                 var result = new List<MemberInfo>();
@@ -382,6 +383,7 @@ namespace SimpleSave.Services
             {
                 return type == ObjectType ||
                        type.IsSubclassOf(ObjectType) ||
+                       type == LayerMaskType ||
                        IsArray(type) ||
                        IsList(type);
             }
@@ -393,7 +395,8 @@ namespace SimpleSave.Services
                     var elementType = type.GetElementType();
 
                     return elementType == ObjectType ||
-                           elementType.IsSubclassOf(ObjectType);
+                           elementType.IsSubclassOf(ObjectType) ||
+                           elementType == LayerMaskType;
                 }
 
                 return false;
@@ -410,7 +413,8 @@ namespace SimpleSave.Services
 
                 var genericArgument = type.GetGenericArguments()[0];
                 return genericArgument == ObjectType ||
-                       genericArgument.IsSubclassOf(ObjectType);
+                       genericArgument.IsSubclassOf(ObjectType) ||
+                       genericArgument == LayerMaskType;
             }
         }
     }
